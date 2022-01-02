@@ -22,6 +22,22 @@ class User(db.Model):
     def __repr__(self):
         return '<E-mail %r>' % self.email
 
+# Create our database model
+class Recipe(db.Model):
+    __tablename__ = "recipe"
+    recipe_id = db.Column(db.Integer, primary_key=True)
+    recipe_name = db.Column(db.String(120), unique=True)
+    ingredients = db.Column(db.String(255), unique=True)
+
+    def __init__(self, recipe_id, recipe_name, ingredients):
+        self.recipe_id = recipe_id
+        self.recipe_name = recipe_name
+        self.ingredients = ingredients
+
+    def __repr__(self):
+        return '<Recipe %r>' % self.email
+
+
 @app.route("/")
 def home():
     return render_template('main.html')
