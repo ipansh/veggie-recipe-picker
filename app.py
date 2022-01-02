@@ -40,6 +40,7 @@ class Recipe(db.Model):
 
 @app.route("/")
 def home():
+    db.create_all()
     return render_template('main.html')
 
 @app.route("/submitinfo", methods = ['POST'])
