@@ -1,31 +1,26 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-import os
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://lydfygrzidzsgq:48ec6bf345df39a7debc5927744a2eb97c4016c52a63bbc34b565c947505953a@ec2-3-217-216-13.compute-1.amazonaws.com:5432/d4suf8da0tjnm'
+#app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
-class CarsModel(db.Model):
-    __tablename__ = 'cars'
-
+# Create our database model
+class User(db.Model):
+    __tablename__ = "users2"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    model = db.Column(db.String())
-    doors = db.Column(db.Integer())
+    email = db.Column(db.String(120), unique=True)
 
-    def __init__(self, name, model, doors):
-        self.name = name
-        self.model = model
-        self.doors = doors
+    def __init__(self, id, email):
+        self.email = id
+        self.email = email
 
     def __repr__(self):
-        return f"<Car {self.name}>"
+        return '<E-mail %r>' % self.email
 
 @app.route("/")
 def home():
@@ -33,7 +28,10 @@ def home():
 
 @app.route("/submitinfo", methods = ['POST'])
 def submit():
-    #message = request.form.values()[0]
+    message = [item for item in request.form.values()][0]
+    my_user = User(3,message)
+    db.session.add(my_user)
+    db.session.commit()
     return render_template('result.html')
 
 if __name__  == '__main__': 
