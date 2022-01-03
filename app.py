@@ -44,7 +44,7 @@ def home():
     return render_template('main.html')
 
 @app.route("/submitinfo", methods = ['POST'])
-def submit():
+def submit():   
     message = [item for item in request.form.values()][0]
     my_user = User(3,message)
     db.session.add(my_user)
