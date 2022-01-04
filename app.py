@@ -23,11 +23,11 @@ class User(db.Model):
         return '<E-mail %r>' % self.email
 
 # Create our database model
-class Recipe(db.Model):
-    __tablename__ = "recipe"
+class Recipe2(db.Model):
+    __tablename__ = "recipe2"
     recipe_id = db.Column(db.Integer, primary_key=True)
-    recipe_name = db.Column(db.String(120), unique=True)
-    ingredients = db.Column(db.String(255), unique=True)
+    recipe_name = db.Column(db.String(120), unique=False)
+    ingredients = db.Column(db.String(255), unique=False)
 
     def __init__(self, recipe_id, recipe_name, ingredients):
         self.recipe_id = recipe_id
@@ -37,7 +37,6 @@ class Recipe(db.Model):
     def __repr__(self):
         return '<Recipe %r>' % self.email
 
-
 @app.route("/")
 def home():
     db.create_all()
@@ -46,8 +45,8 @@ def home():
 @app.route("/submitinfo", methods = ['POST'])
 def submit():   
     message = [item for item in request.form.values()][0]
-    my_user = User(3,message)
-    my_recipe = Recipe(3,message, 'asparagus, cream, carrot')
+    #my_user = User(5,message)
+    my_recipe = Recipe2(6,message, 'asparagus, cream, carrot')
     db.session.add(my_recipe)
     db.session.commit()
     return render_template('result.html')
