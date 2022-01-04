@@ -47,7 +47,8 @@ def home():
 def submit():   
     message = [item for item in request.form.values()][0]
     my_user = User(3,message)
-    db.session.add(my_user)
+    my_recipe = Recipe(3,message, 'asparagus, cream, carrot')
+    db.session.add(my_recipe)
     db.session.commit()
     return render_template('result.html')
 
