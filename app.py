@@ -6,7 +6,6 @@ from wtforms import StringField, RadioField, SelectField, TextAreaField, SubmitF
 app = Flask(__name__)
 
 
-#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://lydfygrzidzsgq:48ec6bf345df39a7debc5927744a2eb97c4016c52a63bbc34b565c947505953a@ec2-3-217-216-13.compute-1.amazonaws.com:5432/d4suf8da0tjnm'
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['SECRET_KEY'] = 'mysecretkey'
